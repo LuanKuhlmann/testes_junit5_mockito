@@ -12,10 +12,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(value = "/user")
 public class UserResource {
+
     @Autowired
     private UserService service;
 
-    @GetMapping("/{id}")
+    @GetMapping(value ="/{id}")
     public ResponseEntity<User> findById(@PathVariable Integer id){
 
         return ResponseEntity.ok().body(service.findById(id));
