@@ -1,5 +1,6 @@
 package br.com.dicasdeumdev.api.resources.exceptions;
 
+import br.com.dicasdeumdev.api.service.exceptions.DataIntegrityViolationException;
 import br.com.dicasdeumdev.api.service.exceptions.ObjectNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
@@ -19,5 +20,14 @@ public class ResourceExceptionHandler {
                         ex.getMessage(), request.getRequestURI());
 
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+    }
+
+    @ExceptionHandler(DataIntegrityViolationException.class)
+    public ResponseEntity<StandartError>DataIntegrityViolationException(DataIntegrityViolationException ex, HttpServletRequest request) {
+        StandartError error =
+                new StandartError(LocalDateTime.now(), HttpStatus.BAD_REQUEST.value(),
+                        ex.getMessage(), request.getRequestURI());
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 }
